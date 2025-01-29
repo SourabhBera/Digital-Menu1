@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ImageModal from "./ImageModal";
 import "./MenuSection.css";
 import { fetchMenu } from "../api/Menu";  // Adjust the path based on your folder structure
-
+import VideoModal from "./VideoModal";
 
 const MenuSection = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -62,8 +62,8 @@ const MenuSection = () => {
               {groupedMenuItems[category].map((item, index) => (
                 <div className="menu-item" key={index}>
                   
-                  <ImageModal
-                    imageSrc={`http://127.0.0.1:8000${item.image_path}`}
+                  <VideoModal 
+                    videoSrc='http://127.0.0.1:8000/static/videos/chicken_biryani.mp4'  // Pass video path from backend
                     dishName={item.dish_name}
                     price={item.price}
                     dish_type={item.dish_type}
