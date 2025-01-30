@@ -178,23 +178,69 @@ async def add_item(
 
 
 
-@app.put("/update-dish/{id}")
-def update_dish(id: int, request: schemas.AddMenu, db: Session = Depends(get_db)):
-    item_query = db.query(models.Menu).filter(models.Menu.id == id)
-    item = item_query.first()
-    if not item:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Menu with item id {id} not found.")
+@app.put("/admin/update-dish/{id}")
+async def edit_dish(
+    id: int,
+    dish_name: str = Form(...),
+    category_id: int = Form(...),
+    dish_type: str = Form(...),
+    price: float = Form(...),
+    image: UploadFile = File(None),  # Image is optional
+    db: Session = Depends(get_db),
+):
+    # Fetch the dish
+    dish = db.query(models.Menu).filter(models.Menu.id == id).first()
+    if not dish:
+        raise HTTPException(status_code=404, detail="Dish not found")
 
-    if request.category_id:
-        category = db.query(models.Category).filter(models.Category.id == request.category_id).first()
-        if not category:
-            raise HTTPException(status_code=400, detail="Invalid category")
+    # Validate category existence
+    category = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not category:
+        raise HTTPException(status_code=400, detail="Invalid category")
 
-    update_data = request.dict(exclude_unset=True)
-    item_query.update(update_data, synchronize_session=False)
+    # Handle optional image update
+    if image:
+        # Validate file extension
+        file_extension = image.filename.split(".")[-1].lower()
+        allowed_extensions = ["jpg", "jpeg", "png"]
+        if file_extension not in allowed_extensions:
+            raise HTTPException(
+                status_code=400, detail="Invalid file type. Only jpg, jpeg, and png are allowed."
+            )
+
+        # Generate a unique filename
+        unique_filename = f"{uuid.uuid4()}.{file_extension}"
+        file_path = os.path.join("static/images", unique_filename)
+
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        # Save the new file
+        try:
+            with open(file_path, "wb") as buffer:
+                shutil.copyfileobj(image.file, buffer)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to save file: {str(e)}")
+
+        # Delete the old image
+        if dish.image_path and os.path.exists(os.path.join("static/images", dish.image_path)):
+            os.remove(os.path.join("static/images", dish.image_path))
+
+        # Update dish image path
+        dish.image_path = unique_filename
+
+    # Update other dish details
+    dish.dish_name = dish_name
+    dish.category_id = category_id
+    dish.dish_type = dish_type
+    dish.price = price
+
+    # Save changes
     db.commit()
+    db.refresh(dish)
 
-    return {"message": f"Item with id {id} updated successfully."}
+    return {"message": f"Dish with ID {id} updated successfully."}
+
 
 
 @app.delete("/delete/{id}")

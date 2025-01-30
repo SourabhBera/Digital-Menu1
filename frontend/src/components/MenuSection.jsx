@@ -50,7 +50,7 @@ const MenuSection = () => {
   return (
     <div className="menu-section">
       {Object.keys(groupedMenuItems).map((category) => (
-        <div key={category} className="category">
+        <div key={category} className="category" style={{marginTop:"20px"}}>
           <button
             className="button-52" role="button"
             onClick={() => toggleCategory(category)}
@@ -61,7 +61,7 @@ const MenuSection = () => {
             <div className="menu-items">
               {groupedMenuItems[category].map((item, index) => (
                 <div className="menu-item" key={index}>
-                  
+                  <img src='http://127.0.0.1:8000/static/images/chicken_biryani.jpg' alt="" className="circularimage" />
                   <VideoModal 
                     videoSrc='http://127.0.0.1:8000/static/videos/chicken_biryani.mp4'  // Pass video path from backend
                     dishName={item.dish_name}

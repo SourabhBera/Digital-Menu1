@@ -1,11 +1,7 @@
 .menu-section {
-    margin-top: 40px; 
     padding: 20px;
   }
-  
-  .category {
-    margin-bottom: 30px;
-  }
+
   
   .category h2 {
     font-size: 24px;
@@ -24,6 +20,7 @@
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
   }
   
   .menu-item h4 {
@@ -34,7 +31,6 @@
   .menu-item p {
     font-size: 16px;
     color: #555;
-    margin-top: 10px;
     font-family: WF Visual sans-serif;
     text-decoration: none;
     font-weight: 600;
@@ -46,11 +42,21 @@
       padding: 13px;
       width: 90%;
       margin: auto;
+      margin-bottom: 7px;
     }
   } 
-  
+
+  .circularimage{
+    width:63px;
+    height:63px;
+    border-radius: 100px;
+    float: right;
+    margin-bottom: 15px;
+    margin-top: 30px;
+
+  }
   .button-52 {
-    margin-bottom: 30px;
+    margin-bottom: 7px;
     font-size: 16px;
     font-weight: 450;
     letter-spacing: 1px;

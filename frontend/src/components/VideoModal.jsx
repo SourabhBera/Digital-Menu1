@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-// import "./VideoModal.css";  // You may want to adjust or create styles for video modal
+import "./VideoModal.css";  // You may want to adjust or create styles for video modal
 import { MdOutlineClose } from "react-icons/md";
+import veg_logo from '../assets/images/veg_logo.png';
+import nonveg_logo from '../assets/images/nonveg_logo.png';
+
 
 function VideoModal({ videoSrc, dishName, price, dish_type }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,13 +11,18 @@ function VideoModal({ videoSrc, dishName, price, dish_type }) {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  // Determine the correct logo based on dish type
+  const logoSrc = dish_type === "Veg" ? veg_logo : nonveg_logo;
+
   return (
     <div onClick={openModal} className="video-modal-container">
-      {/* Add a thumbnail or placeholder for video */}
       <div className="video-thumbnail">
-        <p>{dishName}</p>
-        <p className="dish-price">₹{price}</p>
-        <p className="dish-type">{dish_type}</p>
+        <div className="dish-header">
+          <img src={logoSrc} alt={dish_type} className="dish-logo" />
+          <p className="dish-name">{dishName}</p>
+        </div>
+        <p className="dish-description" style={{fontWeight:"100"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <p className="dish-price" style={{marginBottom:"5px"}}>₹{price}</p>
       </div>
 
       {isModalOpen && (
@@ -22,14 +30,16 @@ function VideoModal({ videoSrc, dishName, price, dish_type }) {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <MdOutlineClose
               onClick={closeModal}
-              style={{ marginBottom: '5px', left: '280px', position: 'absolute' }}
+              style={{ marginBottom: "5px", left: "280px", position: "absolute" }}
             />
-            {/* Replace image with video, and enable autoplay */}
-            <video controls autoPlay muted className="modal-video" style={{width:"80%"}}>
+            <video controls autoPlay muted className="modal-video" style={{ width: "80%" }}>
               <source src={videoSrc} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            <p className="modal-dish-name">{dishName}</p>
+            <div className="modal-dish-details">
+              <img src={logoSrc} alt={dish_type} className="modal-dish-logo" />
+              <p className="modal-dish-name">{dishName}</p>
+            </div>
           </div>
         </div>
       )}
