@@ -1,0 +1,119 @@
+.edit-dish-container {
+    max-width: 500px;
+    margin: 80px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  .input,
+  .select,
+  .file-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .select {
+    cursor: pointer;
+  }
+  
+  .preview-image {
+    display: block;
+    max-width: 100px;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    background: #28a745;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .delete-btn {
+    background: #d54343;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+
+  
+  .submit-btn:hover {
+    background: #218838;
+  }
+  
+  .confirmation-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .popup-content p {
+    margin-bottom: 20px;
+  }
+  
+  .confirm-btn, .cancel-btn {
+    background-color: #4CAF50; /* Green color for confirmation */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 5px;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336; /* Red color for cancellation */
+  }
+  
+  .confirm-btn:hover, .cancel-btn:hover {
+    opacity: 0.8;
+  }
+  
+
+  

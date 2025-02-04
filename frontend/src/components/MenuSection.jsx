@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ImageModal from "./ImageModal";
+import CategoryButton from "./CategoryButton"; // Import the updated CategoryButton component
 import "./MenuSection.css";
-import { fetchMenu } from "../api/Menu";  // Adjust the path based on your folder structure
+import { fetchMenu } from "../api/Menu";
 import VideoModal from "./VideoModal";
 
 const MenuSection = () => {
@@ -9,19 +10,32 @@ const MenuSection = () => {
   const [openCategory, setOpenCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState(null);
+
+  // Define the category order based on your sequence
+  const categoryOrder = [
+    "starters",
+    "soups",
+    "main-course",
+    "breads",
+    "side dishes",
+    "beverages",
+    "desserts",
+    "specials",
+    "extras",
+  ];
 
   useEffect(() => {
     const getMenu = async () => {
       try {
         const fetchedMenu = await fetchMenu();
-        setMenuItems(fetchedMenu); // Directly set the menu data from the backend
+        setMenuItems(fetchedMenu);
       } catch (err) {
         setError("Failed to fetch menu. Please try again.");
       } finally {
         setLoading(false);
       }
     };
-
     getMenu();
   }, []);
 
@@ -37,8 +51,15 @@ const MenuSection = () => {
     return <div>{error}</div>;
   }
 
-  const groupedMenuItems = menuItems.reduce((acc, item) => {
-    const category = (item.category_name || "Others").trim().toLowerCase();  // Use category_name now
+  const filteredItems = menuItems.filter(item => {
+    if (!filter) return true;
+    if (filter === "veg") return item.dish_type === "Veg";
+    if (filter === "nonveg") return item.dish_type === "Non-Veg";
+    return true;
+  });
+
+  const groupedMenuItems = filteredItems.reduce((acc, item) => {
+    const category = (item.category_name || "Others").trim().toLowerCase(); // Convert to lowercase
     if (!acc[category]) {
       acc[category] = [];
     }
@@ -46,27 +67,39 @@ const MenuSection = () => {
     return acc;
   }, {});
 
+  // Sort the grouped categories based on the predefined category order
+  const sortedCategories = Object.keys(groupedMenuItems).sort((a, b) => {
+    const indexA = categoryOrder.indexOf(a);
+    const indexB = categoryOrder.indexOf(b);
+    
+    // If a category doesn't exist in the predefined order, place it at the end
+    return indexA === -1 ? 1 : indexB === -1 ? -1 : indexA - indexB;
+  });
 
   return (
     <div className="menu-section">
-      {Object.keys(groupedMenuItems).map((category) => (
-        <div key={category} className="category" style={{marginTop:"20px"}}>
-          <button
-            className="button-52" role="button"
-            onClick={() => toggleCategory(category)}
-          >
+      <CategoryButton setFilter={setFilter} />
+      {sortedCategories.map((category) => (
+        <div key={category} className="category" style={{ marginTop: "20px" }}>
+          <button className="button-30" role="button" onClick={() => toggleCategory(category)}>
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
           {openCategory === category && (
             <div className="menu-items">
               {groupedMenuItems[category].map((item, index) => (
                 <div className="menu-item" key={index}>
-                  <img src='http://127.0.0.1:8000/static/images/chicken_biryani.jpg' alt="" className="circularimage" />
-                  <VideoModal 
-                    videoSrc='http://127.0.0.1:8000/static/videos/chicken_biryani.mp4'  // Pass video path from backend
+                  
+                  <img
+                    src={`http://127.0.0.1:8000${item.image_path}`}
+                    alt={item.dish_name}
+                    className="circularimage"
+                  />
+                  <VideoModal
+                    videoSrc={`http://127.0.0.1:8000${item.video_path}`}
                     dishName={item.dish_name}
                     price={item.price}
                     dish_type={item.dish_type}
+                   
                   />
                 </div>
               ))}
@@ -79,4 +112,3 @@ const MenuSection = () => {
 };
 
 export default MenuSection;
-

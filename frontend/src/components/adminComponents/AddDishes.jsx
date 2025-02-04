@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AddDishes.css";
@@ -12,6 +12,7 @@ function AddDishes() {
   const [type, setType] = useState("Veg");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
+  const [video, setVideo] = useState(null); // New state for video
   const [message, setMessage] = useState("");
 
   // Fetch categories from the backend
@@ -38,11 +39,20 @@ function AddDishes() {
     }
   };
 
+  const handleVideoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("video/")) {
+      setVideo(file);
+    } else {
+      alert("Please select a valid video file.");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!dishName || !category || !price || !image) {
-      alert("Please fill in all fields and upload an image.");
+    if (!dishName || !category || !price || !image || !video) {
+      alert("Please fill in all fields and upload both an image and a video.");
       return;
     }
 
@@ -52,6 +62,7 @@ function AddDishes() {
     formData.append("dish_type", type);
     formData.append("price", price);
     formData.append("image", image);
+    formData.append("video", video); // Add video to FormData
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/admin/add-dishes", formData, {
@@ -65,9 +76,10 @@ function AddDishes() {
       setType("Veg");
       setPrice("");
       setImage(null);
+      setVideo(null);
 
       // Redirect after success
-      navigate("/");
+      navigate("/admin");
     } catch (error) {
       console.error("Error adding dish:", error.response?.data || error.message);
       setMessage(error.response?.data?.detail || "Failed to add dish. Please try again.");
@@ -136,7 +148,7 @@ function AddDishes() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="image">Upload Image:</label>
+          <label htmlFor="image">Upload Thumbnail Image:</label>
           <input
             type="file"
             id="image"
@@ -144,7 +156,19 @@ function AddDishes() {
             onChange={handleImageUpload}
             required
           />
-          {image && <p>Selected file: {image.name}</p>}
+          {image && <p>Selected image: {image.name}</p>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="video">Upload Video:</label>
+          <input
+            type="file"
+            id="video"
+            accept="video/*"
+            onChange={handleVideoUpload}
+            required
+          />
+          {video && <p>Selected video: {video.name}</p>}
         </div>
 
         <button type="submit" className="submit-button">

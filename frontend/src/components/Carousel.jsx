@@ -1,10 +1,7 @@
 // src/components/MenuCarousel.jsx
 
 import React, { useEffect } from 'react';
-import img1 from '../assets/images/img1.png';
-import img22 from '../assets/images/img22.png';
-import img33 from '../assets/images/img33.png';
-
+import juices_video from '../assets/videos/juices_video.mp4'; // Import your video files
 
 import './carousel.css'; 
 
@@ -21,7 +18,6 @@ function MenuCarousel() {
 
   return (
     <>
-
       <div id="carouselExampleIndicators" className="carousel slide custom-carousel" data-bs-ride="carousel">
         <div className="carousel-indicators">
           <button
@@ -32,7 +28,7 @@ function MenuCarousel() {
             aria-current="true"
             aria-label="Slide 1"
           ></button>
-          <button
+          {/* <button
             type="button"
             data-bs-target="#carouselExampleIndicators"
             data-bs-slide-to="1"
@@ -43,20 +39,17 @@ function MenuCarousel() {
             data-bs-target="#carouselExampleIndicators"
             data-bs-slide-to="2"
             aria-label="Slide 3"
-          ></button>
+          ></button> */}
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src={img1} className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src={img22} className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src={img33} className="d-block w-100" alt="..." />
+            <video className="d-block w-100 video-fit" autoPlay muted loop>
+              <source src={juices_video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
-        <button
+        {/* <button
           className="carousel-control-prev"
           type="button"
           data-bs-target="#carouselExampleIndicators"
@@ -73,7 +66,7 @@ function MenuCarousel() {
         >
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
-        </button>
+        </button> */}
       </div>
     </>
   );

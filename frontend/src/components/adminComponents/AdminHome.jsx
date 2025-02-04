@@ -13,7 +13,9 @@ function AdminHome() {
     const [newCategoryName, setNewCategoryName] = useState("");
     const uploadSectionRef = useRef(null);
     const navigate = useNavigate();
-    
+    const [carouselFile, setCarouselFile] = useState(null);
+    const [uploadedFile, setUploadedFile] = useState(null);  // Store uploaded file URL
+
     const fetchCategories = async () => {
         try {
             const response = await axios.get("http://127.0.0.1:8000/categories");
@@ -120,6 +122,44 @@ function AdminHome() {
     };
     
 
+
+
+    // const handleFileChange = (event) => {
+    //     const selectedFile = event.target.files[0];
+    //     if (selectedFile) {
+    //         setCarouselFile(selectedFile);
+    //     }
+    // };
+
+    // const handleUpload = async () => {
+    //     if (!carouselFile) {
+    //         alert("Please select a file to upload.");
+    //         return;
+    //     }
+
+    //     const formData = new FormData();
+    //     formData.append("file", carouselFile);
+
+    //     try {
+    //         const response = await axios.post("http://127.0.0.1:8000/admin/upload-carousel", formData, {
+    //             headers: { "Content-Type": "multipart/form-data" }
+    //         });
+
+    //         if (response.status === 201) {
+    //             alert("File uploaded successfully!");
+    //             // Set the uploaded file path to state
+    //             setUploadedFile(response.data.file_path);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error uploading file:", error);
+    //         console.log("Error occured", error)
+    //         alert("Failed to upload file.");
+    //     }
+    // };
+
+    
+    
+
     return (
         <>
             <div className="admin-home">
@@ -128,15 +168,18 @@ function AdminHome() {
                 </div>
                 <div className="content-section">
                     <div className="admin-actions">
-                        <button className="button-48" onClick={handleEditCarouselClick}>
+                        
+                        {/* <button className="button-48" onClick={handleEditCarouselClick}>
                             <span className="text">Edit Carousel Images</span>
                         </button>
-                        <br />
+                        <br /> */}
+
+                        
                         <button className="button-48" onClick={() => handleRedirect("/admin/add-dishes")}>
                             <span className="text">Add Dishes</span>
                         </button>
                         <br />
-                        <button className="button-48" onClick={() => handleRedirect("/admin/edit-dishes")}>
+                        <button className="button-48" onClick={() => handleRedirect("/admin/edit-dish")}>
                             <span className="text">Edit Dishes</span>
                         </button>
                         <br />
@@ -151,22 +194,43 @@ function AdminHome() {
                 </div>
             </div>
 
-            <div ref={uploadSectionRef} className="upload-section">
+
+
+            {/* <div ref={uploadSectionRef} className="upload-section">
                 {showUploadSection && (
                     <>
-                        <h4>Edit Carousel Images</h4>
-                        {["Carousel Img 1", "Carousel Img 2", "Carousel Img 3"].map((label, index) => (
-                            <div className="image" key={index}>
-                                <h6>{label}</h6>
-                                <div className="input-container">
-                                    <input type="file" accept="image/*" className="file-input" />
-                                    <button type="submit" className="upload-button">Upload</button>
-                                </div>
+                        <div className="input-container">
+                            <input
+                                type="file"
+                                accept="image/*,video/*"
+                                className="file-input"
+                                onChange={handleFileChange}
+                            />
+                            <button
+                                type="button"
+                                className="upload-button"
+                                onClick={handleUpload}
+                            >
+                                Upload
+                            </button>
+                        </div>
+
+                        {uploadedFile && (
+                            <div className="carousel">
+                                <img
+                                    src={`http://127.0.0.1:8000/${uploadedFile}`}
+                                    alt="Uploaded Carousel"
+                                    className="carousel-item"
+                                />
                             </div>
-                        ))}
+                        )}
                     </>
                 )}
+            </div> */}
 
+
+
+            <div>
                 {showAddCategoryForm && (
                     <>
                         <h4>Add New Category</h4>

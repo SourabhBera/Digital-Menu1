@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, EmailStr
 from typing import Literal
 from fastapi import UploadFile
 
@@ -7,7 +7,9 @@ class AddMenu(BaseModel):
     category: str = Field(..., max_length=50, description="Category of the dish (e.g., Appetizer, Main Course)")
     dish_type: Literal['Veg', 'Non-veg']  # Restrict values to 'veg' or 'nonveg'
     price: int = Field(..., gt=0, description="Price of the dish in integer format")
+    description: str = Field(..., max_length=200, description="Description of the dish")
     image: UploadFile  # To handle image file upload
+    video: UploadFile  # To handle image file upload
 
     # Validators
     @field_validator('dish_name')

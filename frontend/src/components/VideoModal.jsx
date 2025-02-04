@@ -20,6 +20,7 @@ function VideoModal({ videoSrc, dishName, price, dish_type }) {
         <div className="dish-header">
           <img src={logoSrc} alt={dish_type} className="dish-logo" />
           <p className="dish-name">{dishName}</p>
+          
         </div>
         <p className="dish-description" style={{fontWeight:"100"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         <p className="dish-price" style={{marginBottom:"5px"}}>₹{price}</p>
@@ -36,9 +37,10 @@ function VideoModal({ videoSrc, dishName, price, dish_type }) {
               <source src={videoSrc} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            <div className="modal-dish-details">
+            <div className="modal-dish-details" style={{minWidth:"00px", maxWidth:"150px"}}>
               <img src={logoSrc} alt={dish_type} className="modal-dish-logo" />
-              <p className="modal-dish-name">{dishName}</p>
+              <p className="modal-dish-name" style={{marginTop:"15px"}}>{dishName}</p>
+              
             </div>
           </div>
         </div>

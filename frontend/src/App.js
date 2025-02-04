@@ -6,6 +6,7 @@ import Logo from './components/Logo';
 import CategoryButton from './components/CategoryButton';
 import MenuSection from './components/MenuSection';
 import AddDishes from './components/adminComponents/AddDishes';
+import EditDish from './components/adminComponents/EditDish';
 import AdminHome from './components/adminComponents/AdminHome';
 
 
@@ -14,7 +15,6 @@ function HomePage() {
     <>
       <Logo />
       <MenuCarousel />
-      <CategoryButton />
       <MenuSection />
     </>
   );
@@ -38,6 +38,7 @@ function App() {
      
         <Route path="/admin" element={<AdminPage/>} />
         <Route path="/admin/add-dishes" element={<AddDishes/>} />
+        <Route path="/admin/edit-dish" element={<EditDish />} />
       </Routes>
     </Router>
   );
