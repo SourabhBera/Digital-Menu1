@@ -1,5 +1,5 @@
 import React from 'react';
-import './categorybutton.css'; 
+import '../styles/categorybutton.css'; 
 import { FaStar } from 'react-icons/fa'; 
 import veg_logo from '../assets/images/veg_logo.png';
 import nonveg_logo from '../assets/images/nonveg_logo.png';

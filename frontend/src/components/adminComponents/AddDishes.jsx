@@ -1,56 +1,32 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./AddDishes.css";
+import { fetchCategories, addDish } from "../../api/AddDishes.js"; // Import API functions
+import "../../styles/AddDishes.css";
+
 
 function AddDishes() {
   const navigate = useNavigate();
-
   const [dishName, setDishName] = useState("");
+  const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [type, setType] = useState("Veg");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
-  const [video, setVideo] = useState(null); // New state for video
+  const [video, setVideo] = useState(null);
   const [message, setMessage] = useState("");
 
-  // Fetch categories from the backend
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/categories");
-        setCategories(response.data); // Assuming the API returns a list of categories
-      } catch (error) {
-        console.error("Error fetching categories:", error.response?.data || error.message);
-        setMessage("Failed to fetch categories.");
-      }
-    };
-
-    fetchCategories();
+    fetchCategories()
+      .then(setCategories)
+      .catch((err) => setMessage(err.message));
   }, []);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setImage(file);
-    } else {
-      alert("Please select a valid image file.");
-    }
-  };
-
-  const handleVideoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("video/")) {
-      setVideo(file);
-    } else {
-      alert("Please select a valid video file.");
-    }
-  };
+  const handleImageUpload = (e) => setImage(e.target.files[0]);
+  const handleVideoUpload = (e) => setVideo(e.target.files[0]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!dishName || !category || !price || !image || !video) {
       alert("Please fill in all fields and upload both an image and a video.");
       return;
@@ -60,29 +36,17 @@ function AddDishes() {
     formData.append("dish_name", dishName);
     formData.append("category_id", category);
     formData.append("dish_type", type);
+    formData.append("description", description);
     formData.append("price", price);
     formData.append("image", image);
-    formData.append("video", video); // Add video to FormData
+    formData.append("video", video);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/admin/add-dishes", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      setMessage(response.data.message || "Dish added successfully!");
-      // Clear form fields
-      setDishName("");
-      setCategory("");
-      setType("Veg");
-      setPrice("");
-      setImage(null);
-      setVideo(null);
-
-      // Redirect after success
+      const response = await addDish(formData);
+      setMessage(response.message || "Dish added successfully!");
       navigate("/admin");
     } catch (error) {
-      console.error("Error adding dish:", error.response?.data || error.message);
-      setMessage(error.response?.data?.detail || "Failed to add dish. Please try again.");
+      setMessage(error.message);
     }
   };
 
@@ -135,6 +99,18 @@ function AddDishes() {
           </select>
         </div>
 
+        <div className="form-group">
+          <label htmlFor="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description"
+            required
+          />
+        </div>
+        
         <div className="form-group">
           <label htmlFor="price">Price:</label>
           <input

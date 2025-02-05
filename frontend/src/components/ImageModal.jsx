@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ImageModal.css";
+import "../styles/ImageModal.css";
 import { MdOutlineClose } from "react-icons/md";
 
 function ImageModal({ imageSrc, dishName, price, dish_type }) {

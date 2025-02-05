@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./VideoModal.css";  // You may want to adjust or create styles for video modal
+import "../styles/VideoModal.css";  // You may want to adjust or create styles for video modal
 import { MdOutlineClose } from "react-icons/md";
 import veg_logo from '../assets/images/veg_logo.png';
 import nonveg_logo from '../assets/images/nonveg_logo.png';
@@ -7,11 +7,8 @@ import nonveg_logo from '../assets/images/nonveg_logo.png';
 
 function VideoModal({ videoSrc, dishName, price, dish_type }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  // Determine the correct logo based on dish type
   const logoSrc = dish_type === "Veg" ? veg_logo : nonveg_logo;
 
   return (

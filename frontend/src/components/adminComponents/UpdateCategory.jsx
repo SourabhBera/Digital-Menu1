@@ -49,7 +49,7 @@ function UpdateCategory({ categories, setCategories }) {
     };
 
     return (
-        <div className="edit-category-form">
+        <div className="edit-category-form" style={{display:"grid"}}>
             <h4>Edit Existing Category</h4>
             <select
                 value={selectedCategoryId}

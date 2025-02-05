@@ -35,6 +35,15 @@
   margin-bottom: 20px;
 }
 
+.add-category{
+  max-width: fit-content;
+  margin-inline: auto;
+}
+
+.update-category{
+  max-width: fit-content;
+  margin-inline: auto;
+}
 
 .button-48 {
     appearance: none;

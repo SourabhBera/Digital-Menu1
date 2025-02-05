@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./EditDish.css"; // ✅ Import the CSS file
 import { useNavigate } from "react-router-dom";
+import "../../styles/EditDish.css"; 
+
 
 const EditDish = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const EditDish = () => {
     dish_name: "",
     category_id: "",
     dish_type: "",
+    description: "",
     price: "",
     image: "",
     video:""
@@ -45,7 +47,7 @@ const EditDish = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/dishes/?category_id=${categoryId}`);
+      const response = await fetch(`http://localhost:8000/menu/dishes/?category_id=${categoryId}`);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
       setDishes(Array.isArray(data) ? data : []);
@@ -62,7 +64,7 @@ const EditDish = () => {
     if (!dishId) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/dish/${dishId}`);
+      const res = await fetch(`http://localhost:8000/menu/dish/${dishId}`);
       if (!res.ok) throw new Error(`Error fetching dish details: ${res.status}`);
       const data = await res.json();
 
@@ -71,6 +73,7 @@ const EditDish = () => {
         category_id: data?.category_id || selectedCategory,
         dish_type: data?.dish_type || "",
         price: data?.price || "",
+        description: data?.description || "",
         image: "",
         video:"",
       });
@@ -113,6 +116,7 @@ const EditDish = () => {
     formData.append("dish_name", dishData.dish_name);
     formData.append("category_id", selectedCategory);
     formData.append("dish_type", dishData.dish_type);
+    formData.append("description", dishData.description);
     formData.append("price", dishData.price);
 
     if (dishData.image) {
@@ -124,7 +128,7 @@ const EditDish = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/update-dish/${selectedDish}`, {
+      const res = await fetch(`http://localhost:8000/admin/update-dish/${selectedDish}`, {
         method: "PUT",
         body: formData,
       });
@@ -148,7 +152,7 @@ const EditDish = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/delete/${selectedDish}`, {
+      const res = await fetch(`http://localhost:8000/admin/delete/${selectedDish}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error(`Error deleting dish: ${res.status}`);
@@ -229,6 +233,16 @@ const EditDish = () => {
             required
           />
 
+          <label className="label">Description:</label>
+          <input
+            className="input"
+            type="text"
+            name="description"
+            value={dishData.description}
+            onChange={handleInputChange}
+            required
+          />
+
           <label className="label">Thumbnail Image:</label>
           <input className="file-input" type="file" accept="image/*" onChange={handleImageChange} />
           {imagePreview && <img className="preview-image" src={imagePreview} alt="Preview" />}
@@ -253,7 +267,7 @@ const EditDish = () => {
         </form>
       )}
 
-      {/* Confirmation Popup */}
+
       {isConfirmDelete && (
         <div className="confirmation-popup">
           <div className="popup-content">

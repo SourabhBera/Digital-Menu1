@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ImageModal from "./ImageModal";
 import CategoryButton from "./CategoryButton"; // Import the updated CategoryButton component
-import "./MenuSection.css";
+import "../styles/MenuSection.css";
 import { fetchMenu } from "../api/Menu";
 import VideoModal from "./VideoModal";
 
@@ -12,7 +12,6 @@ const MenuSection = () => {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState(null);
 
-  // Define the category order based on your sequence
   const categoryOrder = [
     "starters",
     "soups",
@@ -67,12 +66,9 @@ const MenuSection = () => {
     return acc;
   }, {});
 
-  // Sort the grouped categories based on the predefined category order
   const sortedCategories = Object.keys(groupedMenuItems).sort((a, b) => {
     const indexA = categoryOrder.indexOf(a);
     const indexB = categoryOrder.indexOf(b);
-    
-    // If a category doesn't exist in the predefined order, place it at the end
     return indexA === -1 ? 1 : indexB === -1 ? -1 : indexA - indexB;
   });
 
