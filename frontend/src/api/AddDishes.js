@@ -17,6 +17,7 @@ export const addDish = async (dishData) => {
     const response = await axios.post(`${API_BASE_URL}/admin/add-dishes`, dishData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+    console.log("Response:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error adding dish:", error.response?.data || error.message);

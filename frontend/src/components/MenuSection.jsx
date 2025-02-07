@@ -83,10 +83,9 @@ const MenuSection = () => {
           {openCategory === category && (
             <div className="menu-items">
               {groupedMenuItems[category].map((item, index) => (
-                <div className="menu-item" key={index}>
-                  
+                <div className="menu-item" key={index}>  
                   <img
-                    src={`http://127.0.0.1:8000${item.image_path}`}
+                    src={`data:image/png;base64,${item.image}`}
                     alt={item.dish_name}
                     className="circularimage"
                   />
@@ -95,6 +94,7 @@ const MenuSection = () => {
                     dishName={item.dish_name}
                     price={item.price}
                     dish_type={item.dish_type}
+                    video_path={item.video_path}
                    
                   />
                 </div>

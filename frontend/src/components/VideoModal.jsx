@@ -17,8 +17,8 @@ function VideoModal({ videoSrc, dishName, price, dish_type }) {
         <div className="dish-header">
           <img src={logoSrc} alt={dish_type} className="dish-logo" />
           <p className="dish-name">{dishName}</p>
-          
         </div>
+
         <p className="dish-description" style={{fontWeight:"100"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         <p className="dish-price" style={{marginBottom:"5px"}}>₹{price}</p>
       </div>

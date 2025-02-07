@@ -1,9 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, CheckConstraint
+from sqlalchemy import Column, Integer, String, ForeignKey, CheckConstraint, LargeBinary
 from sqlalchemy.orm import relationship
 from database import Base
-from sqlalchemy import Column, Integer, String, ForeignKey, CheckConstraint
-from sqlalchemy.orm import relationship
-from models import Base  
+
 
 class Category(Base):
     __tablename__ = 'category'
@@ -21,8 +19,9 @@ class Menu(Base):
     dish_type = Column(String, nullable=False)
     description=Column(String, nullable=True)
     price = Column(Integer, nullable=False)
-    image_path = Column(String, nullable=True)
+    image = Column(LargeBinary, nullable=True)
     video_path = Column(String, nullable=True)
+    
 
     category = relationship("Category", back_populates="menus")
 

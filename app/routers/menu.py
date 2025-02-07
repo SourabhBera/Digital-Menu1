@@ -1,3 +1,4 @@
+import base64
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
 import shutil, uuid, os
@@ -21,11 +22,13 @@ def get_menu(db: Session = Depends(get_db)):
             "dish_type": item.Menu.dish_type,
             "description": item.Menu.description,
             "price": item.Menu.price,
-            "image_path": f"/static/images/{item.Menu.image_path.split('/')[-1]}",
+            "image": base64.b64encode(item.Menu.image).decode("utf-8") if item.Menu.image else None,
             "video_path": f"/static/videos/{item.Menu.video_path.split('/')[-1]}"
+            
         } 
         for item in menu
     ]
+
 
 
 
@@ -47,7 +50,7 @@ def get_dishes(category_id: int, db: Session = Depends(get_db)):
             "description": dish.description,
             "dish_type": dish.dish_type,
             "price": dish.price,
-            "image_path": f"/static/images/{dish.image_path}",
+            "image": base64.b64encode(dish.Menu.image).decode("utf-8") if dish.Menu.image else None,
             "video_path": f"/static/videos/{dish.video_path}" if dish.video_path else None  # Handle NULL values
         }
         for dish in dishes
