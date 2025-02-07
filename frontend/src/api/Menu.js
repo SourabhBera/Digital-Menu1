@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://digital-menu-7ohp.onrender.com";
 
 export const fetchMenu = async () => {
     try {

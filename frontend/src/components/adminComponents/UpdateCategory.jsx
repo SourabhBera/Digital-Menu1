@@ -23,7 +23,7 @@ function UpdateCategory({ categories, setCategories }) {
         setIsLoading(true); // Show a loading state during the API call
         try {
             const response = await axios.put(
-                `http://127.0.0.1:8000/update-category/${selectedCategoryId}`,
+                `https://digital-menu-7ohp.onrender.com/update-category/${selectedCategoryId}`,
                 { name: newCategoryName.trim() }
             );
 

@@ -90,7 +90,7 @@ const MenuSection = () => {
                     className="circularimage"
                   />
                   <VideoModal
-                    videoSrc={`http://127.0.0.1:8000${item.video_path}`}
+                    videoSrc={`https://digital-menu-7ohp.onrender.com${item.video_path}`}
                     dishName={item.dish_name}
                     price={item.price}
                     dish_type={item.dish_type}

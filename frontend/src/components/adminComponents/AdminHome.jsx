@@ -18,7 +18,7 @@ function AdminHome() {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/categories");
+            const response = await axios.get("https://digital-menu-7ohp.onrender.com/categories");
             if (response.status === 200) {
                 console.log(response.data)
                 setCategories(response.data);
@@ -55,7 +55,7 @@ function AdminHome() {
     const addCategory = async (categoryName) => {
     setIsLoading(true);
     try {
-        const response = await axios.post("http://127.0.0.1:8000/admin/create-category", { name: categoryName });
+        const response = await axios.post("https://digital-menu-7ohp.onrender.com/admin/create-category", { name: categoryName });
         if (response.status === 201) {
             console.log("Category added:", response.data);
             setCategories((prev) => [...prev, categoryName]);
@@ -104,7 +104,7 @@ function AdminHome() {
         }
     
         try {
-            const response = await axios.put("http://127.0.0.1:8000/admin/update-category", {
+            const response = await axios.put("https://digital-menu-7ohp.onrender.com/admin/update-category", {
                 oldName: selectedCategory,
                 newName: newCategoryName.trim(),
             });
